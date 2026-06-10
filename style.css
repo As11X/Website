@@ -1,0 +1,271 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 10px;
+    transition: all 0.3s;
+}
+
+body.dark {
+    background: #222;
+    color: #eee;
+}
+
+body.accessibility {
+    font-size: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 2px solid #ccc;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.nav-btn {
+    padding: 8px 15px;
+    margin: 2px;
+    cursor: pointer;
+    border: 1px solid #999;
+    background: #f0f0f0;
+}
+
+body.dark .nav-btn {
+    background: #444;
+    color: #eee;
+    border-color: #666;
+}
+
+.container {
+    padding: 15px;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+body.dark .product-card {
+    border-color: #555;
+}
+
+.product-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+}
+
+.product-card h3 {
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+.product-card .price {
+    font-weight: bold;
+    color: #d33;
+}
+
+.btn {
+    padding: 5px 10px;
+    margin: 3px;
+    cursor: pointer;
+    border: 1px solid #999;
+    background: #e0e0e0;
+    font-size: 12px;
+}
+
+body.dark .btn {
+    background: #555;
+    color: #eee;
+}
+
+.btn:hover {
+    background: #ccc;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    margin: 5% auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+body.dark .modal-content {
+    background: #333;
+    color: #eee;
+}
+
+.close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+}
+
+input,
+select,
+textarea {
+    padding: 8px;
+    margin: 5px 0;
+    width: 100%;
+    border: 1px solid #ccc;
+}
+
+body.dark input,
+body.dark select,
+body.dark textarea {
+    background: #444;
+    color: #eee;
+    border-color: #666;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+}
+
+body.dark .filters {
+    border-color: #555;
+}
+
+.cart-item,
+.wishlist-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+body.dark .cart-item,
+body.dark .wishlist-item {
+    border-color: #555;
+}
+
+.slider {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    margin: 15px 0;
+    border: 2px solid #ccc;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.slide:nth-child(1) {
+    background: #ff6b6b;
+    color: white;
+}
+
+.slide:nth-child(2) {
+    background: #4ecdc4;
+    color: white;
+}
+
+.slide:nth-child(3) {
+    background: #ffe66d;
+    color: #333;
+}
+
+.review {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+body.dark .review {
+    border-color: #555;
+}
+
+.stars {
+    color: gold;
+}
+
+.game-area {
+    text-align: center;
+    padding: 20px;
+    border: 2px dashed #999;
+    margin: 15px 0;
+}
+
+.theme-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.badge {
+    background: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 10px;
+    margin-left: 5px;
+}
+
+.pagination {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination button {
+    padding: 5px 10px;
+    cursor: pointer;
+}
