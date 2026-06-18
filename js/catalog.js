@@ -1,4 +1,4 @@
-/** Каталог: фильтрация, сортировка, поиск, рендер карточек */
+
 
 import {
   addToCart, toggleFavorite, isFavorite, addRecent,

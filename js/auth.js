@@ -1,4 +1,4 @@
-/** Авторизация, регистрация, валидация */
+
 
 import { KEYS, getItem, setItem, removeItem, generateToken, getUserIdFromToken } from './storage.js';
 

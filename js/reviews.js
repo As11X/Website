@@ -1,4 +1,4 @@
-/** Отзывы — CRUD в localStorage */
+
 
 import { KEYS, getItem, setItem } from './storage.js';
 

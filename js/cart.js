@@ -1,4 +1,4 @@
-/** Корзина и избранное */
+
 
 import { KEYS, getItem, setItem } from './storage.js';
 

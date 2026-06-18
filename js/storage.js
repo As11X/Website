@@ -1,4 +1,4 @@
-/** Работа с localStorage — ключи и базовые операции */
+
 
 export const KEYS = {
   TOKEN: 'knigi_token',

@@ -1,4 +1,4 @@
-/** UI: навигация, тема, доступность, toast */
+
 
 import { KEYS, getItem, setItem } from './storage.js';
 

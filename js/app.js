@@ -1,7 +1,4 @@
-/**
- * КнигоМир — главный модуль приложения
- * SPA интернет-магазин книг (итоговый проект)
- */
+
 
 import {
   loadUsers, getCurrentUser, isLoggedIn, login, register, logout,
@@ -26,7 +23,6 @@ import {
 
 let activePromo = null;
 
-/** Центральный обработчик действий */
 function handleAction(action, payload) {
   switch (action) {
     case 'open':
@@ -105,7 +101,6 @@ function refreshCatalogPage() {
   bindProductCards(document.getElementById('catalogProducts'), handleAction);
 }
 
-/* ——— Корзина ——— */
 function renderCartPage() {
   const container = document.getElementById('cartContent');
   const cart = getCart();
@@ -228,7 +223,6 @@ function renderCartPage() {
   });
 }
 
-/* ——— Избранное ——— */
 function renderFavoritesPage() {
   const container = document.getElementById('favoritesList');
   const favs = getFavorites();
@@ -241,7 +235,6 @@ function renderFavoritesPage() {
   bindProductCards(container, handleAction);
 }
 
-/* ——— Личный кабинет ——— */
 function renderProfilePage(section) {
   const user = getCurrentUser();
   const content = document.getElementById('profileContent');
@@ -331,7 +324,6 @@ function renderProfilePage(section) {
   }
 }
 
-/* ——— Игра ——— */
 function initGame() {
   const area = document.getElementById('gameArea');
   const scoreEl = document.getElementById('gameScore');
@@ -400,7 +392,6 @@ function initGame() {
   }
 }
 
-/* ——— Авторизация ——— */
 function initAuthForms() {
   document.getElementById('loginForm').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -459,7 +450,6 @@ function initAuthForms() {
   });
 }
 
-/* ——— Поиск ——— */
 function initSearch() {
   document.getElementById('searchForm').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -470,7 +460,6 @@ function initSearch() {
   });
 }
 
-/* ——— Старт ——— */
 async function init() {
   initTheme();
   initA11y();
