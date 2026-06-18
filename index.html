@@ -1,154 +1,257 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Минимальный Магазин</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>КнигоМир — интернет-магазин книг</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="header">
-        <div>
-            <h2>🛒 Минимальный Магазин</h2>
-        </div>
-        <div>
-            <button class="nav-btn" onclick="showPage('catalog')">Каталог</button>
-            <button class="nav-btn" onclick="showPage('cart')">Корзина <span id="cartCount"></span></button>
-            <button class="nav-btn" onclick="showPage('wishlist')">Избранное <span id="wishlistCount"></span></button>
-            <button class="nav-btn" onclick="showPage('profile')">Профиль</button>
-            <button class="nav-btn" onclick="showPage('game')">Игра</button>
-            <div class="theme-controls">
-                <button class="btn" onclick="toggleTheme()">🌓</button>
-                <button class="btn" onclick="toggleAccessibility()">👁</button>
-            </div>
-            <button class="nav-btn" id="authBtn" onclick="showAuthModal()">Войти</button>
-        </div>
-    </div>
+  <a href="#main-content" class="skip-link">Перейти к содержимому</a>
 
+  <header class="header" role="banner">
+    <div class="container header__inner">
+      <a href="#" class="logo" data-nav="home">Читай Город</a>
+
+      <form class="search-form" id="searchForm" role="search">
+        <label for="searchInput" class="visually-hidden">Поиск книг</label>
+        <input type="search" id="searchInput" placeholder="Поиск по названию, автору..." autocomplete="off">
+        <button type="submit" aria-label="Найти">🔍</button>
+      </form>
+
+      <nav class="nav" aria-label="Основная навигация">
+        <button class="nav__btn" data-nav="catalog">Каталог</button>
+        <button class="nav__btn" data-nav="favorites">Избранное <span class="badge" id="favCount">0</span></button>
+        <button class="nav__btn" data-nav="cart">Корзина <span class="badge" id="cartCount">0</span></button>
+        <button class="nav__btn" data-nav="game">Бонусы</button>
+        <button class="nav__btn" id="profileBtn" data-nav="profile">Кабинет</button>
+        <button class="nav__btn" id="authBtn" data-nav="auth">Войти</button>
+      </nav>
+
+      <div class="header__tools">
+        <button class="icon-btn" id="themeToggle" aria-label="Сменить тему" title="Тема">🌓</button>
+        <button class="icon-btn" id="a11yToggle" aria-label="Версия для слабовидящих" title="Для слабовидящих">👁</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="main">
+    <!-- Главная -->
+    <section id="page-home" class="page page--active">
+      <div class="promo-slider" id="promoSlider" aria-label="Акции магазина">
+        <div class="promo-slider__track" id="promoTrack"></div>
+        <button class="promo-slider__arrow promo-slider__arrow--prev" id="promoPrev" aria-label="Предыдущий слайд">‹</button>
+        <button class="promo-slider__arrow promo-slider__arrow--next" id="promoNext" aria-label="Следующий слайд">›</button>
+        <div class="promo-slider__dots" id="promoDots"></div>
+      </div>
+
+      <div class="container">
+        <section class="section">
+          <h2>Популярные категории</h2>
+          <div class="chips" id="popularCategories"></div>
+        </section>
+
+        <section class="section">
+          <h2>Популярные бренды</h2>
+          <div class="chips" id="popularBrands"></div>
+        </section>
+
+        <section class="section">
+          <h2>Популярные товары</h2>
+          <div class="products-grid" id="popularProducts"></div>
+        </section>
+
+        <section class="section" id="recentSection" hidden>
+          <h2>Вы недавно смотрели</h2>
+          <div class="products-grid products-grid--horizontal" id="recentProducts"></div>
+        </section>
+      </div>
+    </section>
+
+    <!-- Каталог -->
+    <section id="page-catalog" class="page">
+      <div class="container">
+        <h1>Каталог книг</h1>
+
+        <aside class="filters" id="filtersPanel">
+          <h2>Фильтры</h2>
+          <form id="filtersForm">
+            <div class="form-group">
+              <label for="filterCategory">Категория</label>
+              <select id="filterCategory" name="category">
+                <option value="">Все категории</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="filterBrand">Издательство</label>
+              <select id="filterBrand" name="brand">
+                <option value="">Все издательства</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="filterPriceMin">Цена от, ₽</label>
+              <input type="number" id="filterPriceMin" name="priceMin" min="0" placeholder="0">
+            </div>
+            <div class="form-group">
+              <label for="filterPriceMax">Цена до, ₽</label>
+              <input type="number" id="filterPriceMax" name="priceMax" min="0" placeholder="5000">
+            </div>
+            <div class="form-group">
+              <label for="filterRating">Мин. рейтинг: <span id="ratingValue">0</span></label>
+              <input type="range" id="filterRating" name="rating" min="0" max="5" step="0.5" value="0">
+            </div>
+            <div class="form-group form-group--checkbox">
+              <input type="checkbox" id="filterInStock" name="inStock">
+              <label for="filterInStock">Только в наличии</label>
+            </div>
+            <div class="form-group form-group--checkbox">
+              <input type="checkbox" id="filterOnSale" name="onSale">
+              <label for="filterOnSale">Только со скидкой</label>
+            </div>
+            <div class="form-group">
+              <label for="filterAuthor">Автор</label>
+              <input type="text" id="filterAuthor" name="author" placeholder="Фамилия автора">
+            </div>
+            <button type="button" class="btn btn--secondary" id="resetFilters">Сбросить</button>
+          </form>
+        </aside>
+
+        <div class="catalog-main">
+          <div class="catalog-toolbar">
+            <p class="catalog-count" id="catalogCount">Найдено: 0</p>
+            <div class="catalog-toolbar__actions">
+              <label for="sortSelect">Сортировка:</label>
+              <select id="sortSelect">
+                <option value="popular">Популярные</option>
+                <option value="price-asc">Сначала недорогие</option>
+                <option value="price-desc">Сначала дорогие</option>
+                <option value="rating">По рейтингу</option>
+                <option value="title">По названию</option>
+              </select>
+              <div class="view-toggle" role="group" aria-label="Вид каталога">
+                <button type="button" class="view-toggle__btn view-toggle__btn--active" data-view="grid" aria-label="Сетка">▦</button>
+                <button type="button" class="view-toggle__btn" data-view="list" aria-label="Список">☰</button>
+              </div>
+            </div>
+          </div>
+          <div class="products-grid" id="catalogProducts"></div>
+          <button class="btn btn--primary btn--load-more" id="loadMoreBtn" hidden>Загрузить ещё</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Карточка товара -->
+    <section id="page-product" class="page">
+      <div class="container" id="productDetail"></div>
+    </section>
+
+    <!-- Корзина -->
+    <section id="page-cart" class="page">
+      <div class="container">
+        <h1>Корзина</h1>
+        <div id="cartContent"></div>
+      </div>
+    </section>
+
+    <!-- Избранное -->
+    <section id="page-favorites" class="page">
+      <div class="container">
+        <h1>Избранное</h1>
+        <div class="products-grid" id="favoritesList"></div>
+      </div>
+    </section>
+
+    <!-- Игра / бонусы -->
+    <section id="page-game" class="page">
+      <div class="container container--narrow">
+        <h1>Игра «Поймай книгу»</h1>
+        <p class="game-desc">Кликайте по появляющимся книгам за 15 секунд. Наберите 10 очков — получите промокод на скидку 10%!</p>
+        <div class="game-panel">
+          <p>Очки: <strong id="gameScore">0</strong> / 10</p>
+          <p>Время: <strong id="gameTime">15</strong> сек</p>
+          <button class="btn btn--primary" id="startGameBtn">Начать игру</button>
+          <div class="game-area" id="gameArea"></div>
+          <p class="game-result" id="gameResult"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Авторизация -->
+    <section id="page-auth" class="page">
+      <div class="container container--narrow">
+        <div class="auth-tabs" role="tablist">
+          <button class="auth-tabs__btn auth-tabs__btn--active" data-tab="login" role="tab">Вход</button>
+          <button class="auth-tabs__btn" data-tab="register" role="tab">Регистрация</button>
+        </div>
+
+        <form id="loginForm" class="auth-form">
+          <h2>Вход в аккаунт</h2>
+          <div class="form-group">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" required placeholder="email@example.com">
+            <span class="form-error" id="loginEmailError"></span>
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Пароль</label>
+            <input type="password" id="loginPassword" required minlength="6" placeholder="Минимум 6 символов">
+            <span class="form-error" id="loginPasswordError"></span>
+          </div>
+          <button type="submit" class="btn btn--primary">Войти</button>
+        </form>
+
+        <form id="registerForm" class="auth-form" hidden>
+          <h2>Регистрация</h2>
+          <div class="form-group">
+            <label for="regName">Имя</label>
+            <input type="text" id="regName" required minlength="2">
+            <span class="form-error" id="regNameError"></span>
+          </div>
+          <div class="form-group">
+            <label for="regEmail">Email</label>
+            <input type="email" id="regEmail" required>
+            <span class="form-error" id="regEmailError"></span>
+          </div>
+          <div class="form-group">
+            <label for="regPassword">Пароль</label>
+            <input type="password" id="regPassword" required minlength="6">
+            <span class="form-error" id="regPasswordError"></span>
+          </div>
+          <div class="form-group">
+            <label for="regPasswordConfirm">Подтверждение пароля</label>
+            <input type="password" id="regPasswordConfirm" required>
+            <span class="form-error" id="regPasswordConfirmError"></span>
+          </div>
+          <button type="submit" class="btn btn--primary">Зарегистрироваться</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Личный кабинет -->
+    <section id="page-profile" class="page">
+      <div class="container">
+        <h1>Личный кабинет</h1>
+        <div class="profile-layout">
+          <nav class="profile-nav" aria-label="Разделы кабинета">
+            <button class="profile-nav__btn profile-nav__btn--active" data-profile="info">Мои данные</button>
+            <button class="profile-nav__btn" data-profile="orders">Заказы</button>
+            <button class="profile-nav__btn" data-profile="promos">Промокоды</button>
+            <button class="profile-nav__btn" data-profile="reviews">Мои отзывы</button>
+            <button class="btn btn--secondary" id="logoutBtn">Выйти</button>
+          </nav>
+          <div class="profile-content" id="profileContent"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
     <div class="container">
-        <!-- Каталог -->
-        <div id="catalog" class="page active">
-            <div class="slider">
-                <div class="slide active">🎉 СКИДКА 50% НА ВСЁ!</div>
-                <div class="slide">🚚 БЕСПЛАТНАЯ ДОСТАВКА от 3000₽</div>
-                <div class="slide">🎁 ПОДАРОК при покупке от 5000₽</div>
-            </div>
-
-            <h2>Каталог товаров</h2>
-            
-            <div class="filters">
-                <input type="text" id="searchInput" placeholder="🔍 Поиск..." onkeyup="filterProducts()">
-                <select id="categoryFilter" onchange="filterProducts()">
-                    <option value="">Все категории</option>
-                </select>
-                <select id="priceFilter" onchange="filterProducts()">
-                    <option value="">Любая цена</option>
-                    <option value="0-50">До 50₽</option>
-                    <option value="50-100">50-100₽</option>
-                    <option value="100-500">100-500₽</option>
-                    <option value="500-1000">500-1000₽</option>
-                    <option value="1000-99999">Более 1000₽</option>
-                </select>
-                <select id="ratingFilter" onchange="filterProducts()">
-                    <option value="">Любой рейтинг</option>
-                    <option value="4">4+ звезды</option>
-                    <option value="3">3+ звезды</option>
-                </select>
-                <select id="brandFilter" onchange="filterProducts()">
-                    <option value="">Любой бренд</option>
-                </select>
-                <select id="stockFilter" onchange="filterProducts()">
-                    <option value="">Все товары</option>
-                    <option value="instock">В наличии</option>
-                    <option value="lowstock">Заканчивается</option>
-                </select>
-                <select id="discountFilter" onchange="filterProducts()">
-                    <option value="">Любая скидка</option>
-                    <option value="yes">Со скидкой</option>
-                    <option value="no">Без скидки</option>
-                </select>
-                <select id="sortFilter" onchange="filterProducts()">
-                    <option value="default">Сортировка</option>
-                    <option value="price-asc">Сначала дешевые</option>
-                    <option value="price-desc">Сначала дорогие</option>
-                    <option value="rating-desc">По рейтингу</option>
-                    <option value="name-asc">По названию А-Я</option>
-                </select>
-            </div>
-
-            <div id="productsGrid" class="products-grid"></div>
-            <div id="pagination" class="pagination"></div>
-        </div>
-
-        <!-- Карточка товара -->
-        <div id="productDetail" class="page">
-            <button class="btn" onclick="showPage('catalog')">← Назад к каталогу</button>
-            <div id="productDetailContent"></div>
-        </div>
-
-        <!-- Корзина -->
-        <div id="cart" class="page">
-            <h2>Корзина</h2>
-            <div id="cartItems"></div>
-            <div id="cartTotal"></div>
-            <button class="btn" onclick="checkout()">Оформить заказ</button>
-        </div>
-
-        <!-- Избранное -->
-        <div id="wishlist" class="page">
-            <h2>Избранное</h2>
-            <div id="wishlistItems"></div>
-        </div>
-
-        <!-- Профиль -->
-        <div id="profile" class="page">
-            <h2>Личный кабинет</h2>
-            <div id="profileContent"></div>
-        </div>
-
-        <!-- Игра -->
-        <div id="game" class="page">
-            <h2>Игра - Получи промокод!</h2>
-            <div class="game-area">
-                <p>Угадай число от 1 до 10 и получи скидку!</p>
-                <input type="number" id="guessNumber" min="1" max="10" placeholder="Введите число">
-                <button class="btn" onclick="playGame()">Играть</button>
-                <div id="gameResult"></div>
-            </div>
-            <div id="promoCodes"></div>
-        </div>
+      <p>Читай Город © 2026 — итоговый проект по веб-разработке</p>
     </div>
+  </footer>
 
-    <!-- Модальное окно авторизации -->
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeAuthModal()">&times;</span>
-            <h2 id="authTitle">Вход</h2>
-            <input type="email" id="authEmail" placeholder="Email">
-            <input type="password" id="authPassword" placeholder="Пароль">
-            <input type="text" id="authName" placeholder="Имя (только для регистрации)" style="display:none;">
-            <button class="btn" onclick="authenticate()" id="authSubmit">Войти</button>
-            <button class="btn" onclick="toggleAuthMode()">Переключить на регистрацию</button>
-        </div>
-    </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    <!-- Модальное окно отзывов -->
-    <div id="reviewModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeReviewModal()">&times;</span>
-            <h2>Отзывы</h2>
-            <div id="reviewsList"></div>
-            <h3>Оставить отзыв</h3>
-            <select id="reviewRating">
-                <option value="5">⭐⭐⭐⭐⭐</option>
-                <option value="4">⭐⭐⭐⭐</option>
-                <option value="3">⭐⭐⭐</option>
-                <option value="2">⭐⭐</option>
-                <option value="1">⭐</option>
-            </select>
-            <textarea id="reviewText" placeholder="Ваш отзыв..."></textarea>
-            <button class="btn" onclick="submitReview()">Отправить</button>
-        </div>
-    </div>
+  <script type="module" src="js/app.js"></script>
 </body>
 </html>
